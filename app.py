@@ -18,13 +18,13 @@ relative_coord = st.secrets["relative_coord"]
 
 # 計算現在年月
 today = datetime.now()
-year, month = today.year, today.month
+year, month, day = today.year, today.month, today.day
 
 
 # 計算應該要操作哪一基礎列
 def get_row_init(year: int, month: int) -> int:
-  year_base = 2023
-  month_base = 9
+  year_base = st.secrets["year_base"]
+  month_base = st.secrets["month_base"]
   return (((year - year_base)*12) + (month - month_base)) * 5 + 2
 
 
