@@ -35,8 +35,18 @@ def get_info(row_init: int, target: str):
 
 
 def get_cell_formula(row_init: int, target: str):
-  row = row_init + int(relative_coord[target].split(',')[0])
-  col = int(relative_coord[target].split(',')[1])
+  if target == st.secrets["spend"].split(',')[0] and day > 12:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+  else if target == st.secrets["spend"].split(',')[1] and day > 28:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+  else if target == st.secrets["spend"].split(',')[3] and day > 28:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])    
+  else:
+    row = row_init + int(relative_coord[target].split(',')[0])
+    col = int(relative_coord[target].split(',')[1])
   return sheet_1.cell(row, col, value_render_option='FORMULA').value
 
 def set_cell_value(row_init: int, target: str, money: str):
@@ -50,10 +60,26 @@ def set_cell_value(row_init: int, target: str, money: str):
 
 
 def set_cell_formula(row_init: int, target: str, math_type: str, money: str):
-  row = row_init + int(relative_coord[target].split(',')[0])
-  col = int(relative_coord[target].split(',')[1])
-  origin = get_cell_formula(row_init, target)
-  sheet_1.update_cell(row, col, origin + math_type + money)
+  if target == st.secrets["spend"].split(',')[0] and day > 12:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+    origin = get_cell_formula(row_init, target)
+    sheet_1.update_cell(row, col, origin + math_type + money)
+  else if target == st.secrets["spend"].split(',')[1] and day > 28:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+    origin = get_cell_formula(row_init, target)
+    sheet_1.update_cell(row, col, origin + math_type + money)
+  else if target == st.secrets["spend"].split(',')[3] and day > 28:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+    origin = get_cell_formula(row_init, target)
+    sheet_1.update_cell(row, col, origin + math_type + money)
+  else:
+    row = row_init + int(relative_coord[target].split(',')[0])
+    col = int(relative_coord[target].split(',')[1])
+    origin = get_cell_formula(row_init, target)
+    sheet_1.update_cell(row, col, origin + math_type + money)
 
   set_cell_value(row_init, "H0", get_info(row_init, "H0"))
   set_cell_value(row_init, "H1", get_info(row_init, "H1"))
