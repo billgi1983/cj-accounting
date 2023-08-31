@@ -2,6 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
 from datetime import datetime
+import pytz
 
 
 scopes = ["https://spreadsheets.google.com/feeds"]
@@ -17,7 +18,7 @@ relative_coord = st.secrets["relative_coord"]
 # ----- functions ----- #
 
 # 計算現在年月
-today = datetime.now()
+today = datetime.now(pytz.timezone('Asia/Taipei'))
 year, month, day = today.year, today.month, today.day
 
 
