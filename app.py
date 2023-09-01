@@ -18,7 +18,7 @@ relative_coord = st.secrets["relative_coord"]
 # ----- functions ----- #
 
 # 計算現在年月
-today = datetime.now(pytz.timezone('Asia/Taipei'))
+today = datetime.now()
 year, month, day = today.year, today.month, today.day
 
 
@@ -30,6 +30,15 @@ def get_row_init(year: int, month: int) -> int:
 
 
 def get_info(row_init: int, target: str):
+  if target == st.secrets["spend"].split(',')[0] and day > 12:
+      row = row_init + int(relative_coord[target].split(',')[0]) + 5
+      col = int(relative_coord[target].split(',')[1])
+  elif target == st.secrets["spend"].split(',')[1] and day > 28:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
+  elif target == st.secrets["spend"].split(',')[2] and day > 23:
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
   row = row_init + int(relative_coord[target].split(',')[0])
   col = int(relative_coord[target].split(',')[1])
   return sheet_1.cell(row, col).value
@@ -42,9 +51,9 @@ def get_cell_formula(row_init: int, target: str):
   elif target == st.secrets["spend"].split(',')[1] and day > 28:
     row = row_init + int(relative_coord[target].split(',')[0]) + 5
     col = int(relative_coord[target].split(',')[1])
-  elif target == st.secrets["spend"].split(',')[3] and day > 28:
+  elif target == st.secrets["spend"].split(',')[2] and day > 23:
     row = row_init + int(relative_coord[target].split(',')[0]) + 5
-    col = int(relative_coord[target].split(',')[1])    
+    col = int(relative_coord[target].split(',')[1])
   else:
     row = row_init + int(relative_coord[target].split(',')[0])
     col = int(relative_coord[target].split(',')[1])
@@ -71,7 +80,7 @@ def set_cell_formula(row_init: int, target: str, math_type: str, money: str):
     col = int(relative_coord[target].split(',')[1])
     origin = get_cell_formula(row_init, target)
     sheet_1.update_cell(row, col, origin + math_type + money)
-  elif target == st.secrets["spend"].split(',')[3] and day > 28:
+  elif target == st.secrets["spend"].split(',')[2] and day > 23:
     row = row_init + int(relative_coord[target].split(',')[0]) + 5
     col = int(relative_coord[target].split(',')[1])
     origin = get_cell_formula(row_init, target)
@@ -87,7 +96,6 @@ def set_cell_formula(row_init: int, target: str, math_type: str, money: str):
   #set_cell_value(row_init, "H2", get_info(row_init, "H2"))
   #set_cell_value(row_init, "H3", get_info(row_init, "H3"))
   #set_cell_value(row_init, "H4", get_info(row_init, "H4"))
-
 
 def deposit(row_init: int, target: str, money: str):
   set_cell_formula(row_init, target, '+',  money)
