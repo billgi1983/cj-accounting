@@ -31,8 +31,8 @@ def get_row_init(year: int, month: int) -> int:
 
 def get_info(row_init: int, target: str):
   if target == st.secrets["spend"].split(',')[0] and day > 12:
-      row = row_init + int(relative_coord[target].split(',')[0]) + 5
-      col = int(relative_coord[target].split(',')[1])
+    row = row_init + int(relative_coord[target].split(',')[0]) + 5
+    col = int(relative_coord[target].split(',')[1])
   elif target == st.secrets["spend"].split(',')[1] and day > 28:
     row = row_init + int(relative_coord[target].split(',')[0]) + 5
     col = int(relative_coord[target].split(',')[1])
