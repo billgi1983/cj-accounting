@@ -39,8 +39,9 @@ def get_info(row_init: int, target: str):
   elif target == st.secrets["spend"].split(',')[2] and day > 23:
     row = row_init + int(relative_coord[target].split(',')[0]) + 5
     col = int(relative_coord[target].split(',')[1])
-  row = row_init + int(relative_coord[target].split(',')[0])
-  col = int(relative_coord[target].split(',')[1])
+  else:
+    row = row_init + int(relative_coord[target].split(',')[0])
+    col = int(relative_coord[target].split(',')[1])
   return sheet_1.cell(row, col).value
 
 
